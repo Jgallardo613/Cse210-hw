@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 
+// Creative Feature Implemented: The program now tracks and displays how many times each activity was completed during the session.
 public class Program
 {
     public static void Main(string[] args)
@@ -34,8 +35,10 @@ public class Program
             }
             else if (choice == "4")
             {
+                Activity.DisplayActivityLog();
+                
                 Console.WriteLine("Thank you for using the Mindfulness Program. Goodbye!");
-                Thread.Sleep(2000);
+                Thread.Sleep(4000);
             }
             else
             {

@@ -1,8 +1,11 @@
 using System;
 using System.Threading;
+using System.Collections.Generic;
 
 public class Activity
 {
+    private static Dictionary<string, int> _activityLog = new Dictionary<string, int>();
+
     protected string _name;
     protected string _description;
     protected int _duration;
@@ -11,6 +14,10 @@ public class Activity
     {
         _name = name;
         _description = description;
+        if (!_activityLog.ContainsKey(_name))
+        {
+            _activityLog.Add(_name, 0);
+        }
     }
 
     protected void DisplayStartingMessage()
@@ -31,12 +38,29 @@ public class Activity
 
     protected void DisplayEndingMessage()
     {
+        LogActivityCompletion();
+
         Console.WriteLine();
         Console.WriteLine("Well done!!");
         ShowSpinner(5);
         Console.WriteLine();
         Console.WriteLine($"You have completed another {_duration} seconds of the {_name}.");
         ShowSpinner(5);
+    }
+
+    private void LogActivityCompletion()
+    {
+        _activityLog[_name]++;
+    }
+
+    public static void DisplayActivityLog()
+    {
+        Console.WriteLine("\n--- Session Activity Summary ---");
+        foreach (var entry in _activityLog)
+        {
+            Console.WriteLine($"- {entry.Key}: Completed {entry.Value} time(s)");
+        }
+        Console.WriteLine("--------------------------------");
     }
 
     protected void ShowSpinner(int seconds)
